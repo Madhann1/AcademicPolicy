@@ -14,22 +14,11 @@ const LoginPage = () => {
 
     const [error, setError] = useState('');
 
-    const handleLogin = async (e, demoRole) => {
+    const handleLogin = async (e) => {
         e?.preventDefault();
         setError('');
 
-        let loginEmail = email;
-        let loginPassword = password;
-
-        // Handle Demo Buttons
-        if (demoRole) {
-            loginPassword = 'password123';
-            if (demoRole === ROLES.ADMIN) loginEmail = 'admin@college.edu';
-            else if (demoRole === ROLES.FACULTY) loginEmail = 'faculty@college.edu';
-            else loginEmail = 'student@college.edu';
-        }
-
-        const result = await login(loginEmail, loginPassword);
+        const result = await login(email, password);
 
         if (result.success) {
             // Role is now inside the user object in context, but we can also check the local storage or result
@@ -74,7 +63,7 @@ const LoginPage = () => {
                             </div>
                         </div>
                     )}
-                    <form className="space-y-6" onSubmit={(e) => handleLogin(e)}>
+                    <form className="space-y-6" onSubmit={handleLogin}>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                 Email address
@@ -148,46 +137,6 @@ const LoginPage = () => {
                             </button>
                         </div>
                     </form>
-
-                    <div className="mt-6">
-                        <div className="relative">
-                            <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-300" />
-                            </div>
-                            <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white text-gray-500">
-                                    Or demo login as
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="mt-6 grid grid-cols-3 gap-3">
-                            <div>
-                                <button
-                                    onClick={(e) => handleLogin(e, ROLES.ADMIN)}
-                                    className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-purple-50 text-sm font-medium text-purple-700 hover:bg-purple-100"
-                                >
-                                    Admin
-                                </button>
-                            </div>
-                            <div>
-                                <button
-                                    onClick={(e) => handleLogin(e, ROLES.FACULTY)}
-                                    className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-orange-50 text-sm font-medium text-orange-700 hover:bg-orange-100"
-                                >
-                                    Faculty
-                                </button>
-                            </div>
-                            <div>
-                                <button
-                                    onClick={(e) => handleLogin(e, ROLES.STUDENT)}
-                                    className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-green-50 text-sm font-medium text-green-700 hover:bg-green-100"
-                                >
-                                    Student
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
